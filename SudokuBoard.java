@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.*;
 
 public class SudokuBoard { 
    private int [][] board;
@@ -10,16 +11,16 @@ public class SudokuBoard {
       File f = new File(fileName);
       Scanner s = new Scanner (f);
       
-      for (int r= 0; r<9; r++ ) {
+      for (int r = 0; r < 9; r++ ) {
          if (s.hasNextLine()) {
             String line = s.nextLine();
-            for (int c=0; c< 9; c++){
+            for (int c = 0; c < 9; c++){
                char num = line.charAt(c);
                
-               if(num=='.') {
-                  board[r][c]=0;
+               if(num == '.') {
+                  board[r][c] = 0;
                } else {
-                  board[r][c]= num-'0';
+                  board[r][c] = num - '0';
                }
             }
          }
@@ -27,15 +28,60 @@ public class SudokuBoard {
       }
    }
    
+   private boolean isCorrect() {
+      for (int r = 0; r < board.length; r++) {
+         for(int c = 0; c < board[r].length; c++) {
+            int number = board[r][c];
+            if(number < 0 || number > 9) {
+               return false;
+            }
+         }
+      }
+      
+      return true;
+   }
+  
+   private boolean checkRows() {
+      for (int r = 0; r < board.length; r++) {
+      
+         Map<Integer, Integer> numbers = new HashMap<>();
+         
+         for(int c = 0; c < board[r].length; c++) {
+            int number = board[r][c];
+                     
+            if(numbers.containsKey(number)) {
+               return false;            
+            } else {
+               numbers.put(number, 1);
+            }
+         }
+      }
+      return true;
+   } 
+   
+   private boolean checkColumns() {
+      return true;
+   }
+   
+   private boolean checkMiniSquares() {
+      return true;
+   }
+   
+   public boolean isValid(){// needs a Set
+      return true;
+   }
+   
+
+   
    public String toString () {
       String result = "";
-      for (int r=0;r<9;r++) {
-         if (r%3 ==0) {
+      for (int r = 0;r < 9; r++) {
+         if (r % 3 == 0) {
             result += "| - - - + - - - + - - - |\n";
          }
-         for (int c=0; c<9; c++) {
-            if(c%3==0) {
-               result+="| ";
+         for (int c = 0; c < 9; c++) {
+            if(c % 3 == 0) {
+               result += "| ";
             }
             if (board[r][c]==0) {
                result += ". ";
