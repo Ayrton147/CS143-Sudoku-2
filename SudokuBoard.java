@@ -60,6 +60,20 @@ public class SudokuBoard {
    } 
    
    private boolean checkColumns() {
+      for (int r = 0; r < board.length; r++) {
+      
+         Map<Integer, Integer> numbers = new HashMap<>();
+         
+         for(int c = 0; c < board[r].length; c++) {
+            int number = board[c][r];
+                     
+            if(numbers.containsKey(number)) {
+               return false;            
+            } else {
+               numbers.put(number, 1);
+            }
+         }
+      }
       return true;
    }
    
