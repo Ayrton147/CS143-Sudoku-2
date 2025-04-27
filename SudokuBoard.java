@@ -11,7 +11,7 @@ public class SudokuBoard {
       File f = new File(fileName);
       Scanner s = new Scanner (f);
       
-      for (int r = 0; r < 9; r++ ) {
+      for (int r = 0; r < 9; r++) {
          if (s.hasNextLine()) {
             String line = s.nextLine();
             for (int c = 0; c < 9; c++){
@@ -49,7 +49,7 @@ public class SudokuBoard {
          for(int c = 0; c < board[r].length; c++) {
             int number = board[r][c];
                      
-            if(numbers.containsKey(number)) {
+            if(numbers.containsKey(number) && number != 0) {
                return false;            
             } else {
                numbers.put(number, 1);
@@ -60,14 +60,14 @@ public class SudokuBoard {
    } 
    
    private boolean checkColumns() {
-      for (int c = 0; c < board[c].length; c++) {
+      for (int c = 0; c < board.length; c++) {
       
          Map<Integer, Integer> numbers = new HashMap<>();
          
          for(int r = 0; r < board.length; r++) {
             int number = board[r][c];
                      
-            if(numbers.containsKey(number)) {
+            if(numbers.containsKey(number) && number != 0) {
                return false;            
             } else {
                numbers.put(number, 1);
@@ -90,17 +90,18 @@ public class SudokuBoard {
       return mini;
    }
    
-   public boolean checkMiniSquares() {
-      for(int i = 0; i < 9; i++) {
-      
+   public boolean checkMiniSquares() {      
+      for(int i = 1; i < 10; i++) {
+         int[][] mini = miniSquare(i);
+
          Map<Integer, Integer> miniSquare = new HashMap<>();
          
-         for (int r = 0; r < board.length; r++) {
+         for (int r = 0; r < mini.length; r++) {
                            
-                  for(int c = 0; c < board[r].length; c++) {
-                     int number = board[r][c];
+                  for(int c = 0; c < mini[r].length; c++) {
+                     int number = mini[r][c];
                               
-                     if(miniSquare.containsKey(number)) {
+                     if(miniSquare.containsKey(number) && number != 0) {
                         return false;            
                } else {
                   miniSquare.put(number, 1);
@@ -125,7 +126,7 @@ public class SudokuBoard {
                   int number = board[r][c];
                            
                   if(numbers.containsKey(number)) {
-                     numbers.put(number,numbers.get(number));       
+                     numbers.put(number,numbers.get(number) + 1);       
             } else {
                numbers.put(number, 1);
             }
@@ -168,17 +169,13 @@ public class SudokuBoard {
 
 /*
 # PROGRAM OUTPUT
- | - - - + - - - + - - - |
- | 2 . . | 1 . 5 | . . 3 | 
- | . 5 4 | . . . | 7 1 . | 
- | . 1 . | 2 . 3 | . 8 . | 
- | - - - + - - - + - - - |
- | 6 . 2 | 8 . 7 | 3 . 4 | 
- | . . . | . . . | . . . | 
- | 1 . 5 | 3 . 9 | 8 . 6 | 
- | - - - + - - - + - - - |
- | . 2 . | 7 . 1 | . 6 . | 
- | . 8 1 | . . . | 2 4 . | 
- | 7 . . | 4 . 2 | . . 1 | 
- | - - - + - - - + - - - |
+ Checking empty board...passed.
+ Checking incomplete, valid board...passed.
+ Checking complete, valid board...passed.
+ Checking dirty data board...passed.
+ Checking row violating board...passed.
+ Checking col violating board...passed.
+ Checking row&col violating board...passed.
+ Checking mini-square violating board...passed.
+ **** HORRAY: ALL TESTS PASSED ****
 */
