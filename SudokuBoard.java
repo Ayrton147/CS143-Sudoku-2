@@ -60,12 +60,12 @@ public class SudokuBoard {
    } 
    
    private boolean checkColumns() {
-      for (int r = 0; r < board.length; r++) {
+      for (int c = 0; c < board[c].length; c++) {
       
          Map<Integer, Integer> numbers = new HashMap<>();
          
-         for(int c = 0; c < board[r].length; c++) {
-            int number = board[c][r];
+         for(int r = 0; r < board.length; r++) {
+            int number = board[r][c];
                      
             if(numbers.containsKey(number)) {
                return false;            
@@ -77,12 +77,42 @@ public class SudokuBoard {
       return true;
    }
    
-   private boolean checkMiniSquares() {
+   private int[][] miniSquare(int spot) {
+      int[][] mini = new int[3][3];
+      for(int r = 0; r < 3; r++) {
+         for(int c = 0; c < 3; c++) {
+            // whoa - wild! This took me a solid hour to figure out (at least)
+            // This translates between the "spot" in the 9x9 Sudoku board
+            // and a new mini square of 3x3
+            mini[r][c] = board[(spot - 1) / 3 * 3 + r][(spot - 1) % 3 * 3 + c];
+         }
+      }
+      return mini;
+   }
+   
+   public boolean checkMiniSquares() {
+      for(int i = 0; i < 9; i++) {
+      
+         Map<Integer, Integer> miniSquare = new HashMap<>();
+         
+         for (int r = 0; r < board.length; r++) {
+            
+            for(int c = 0; c < board[r].length; c++) {
+               int number = board[r][c];
+                        
+               if(miniSquare.containsKey(number)) {
+                  return false;            
+               } else {
+                  miniSquare.put(number, 1);
+               }
+            }
+         }
+      }
       return true;
    }
    
-   public boolean isValid(){// needs a Set
-      return true;
+   public boolean isValid(){
+      return isCorrect() && checkRows() && checkColumns() && checkMiniSquares();
    }
    
 
