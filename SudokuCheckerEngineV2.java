@@ -1,6 +1,8 @@
+import java.io.FileNotFoundException;
+
 public class SudokuCheckerEngineV2 {
 
-   public static void main(String[] args) {
+   public static void main(String[] args) throws FileNotFoundException {
       boolean allTests = true;
       
       // an empty board is valid, but not solved
