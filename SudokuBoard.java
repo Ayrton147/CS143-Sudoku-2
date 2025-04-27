@@ -96,12 +96,12 @@ public class SudokuBoard {
          Map<Integer, Integer> miniSquare = new HashMap<>();
          
          for (int r = 0; r < board.length; r++) {
-            
-            for(int c = 0; c < board[r].length; c++) {
-               int number = board[r][c];
-                        
-               if(miniSquare.containsKey(number)) {
-                  return false;            
+                           
+                  for(int c = 0; c < board[r].length; c++) {
+                     int number = board[r][c];
+                              
+                     if(miniSquare.containsKey(number)) {
+                        return false;            
                } else {
                   miniSquare.put(number, 1);
                }
@@ -115,7 +115,32 @@ public class SudokuBoard {
       return isCorrect() && checkRows() && checkColumns() && checkMiniSquares();
    }
    
-
+   public boolean isFull(){
+      Map<Integer, Integer> numbers = new HashMap<>();
+      
+         
+      for (int r = 0; r < board.length; r++) {
+                        
+               for(int c = 0; c < board[r].length; c++) {
+                  int number = board[r][c];
+                           
+                  if(numbers.containsKey(number)) {
+                     numbers.put(number,numbers.get(number));       
+            } else {
+               numbers.put(number, 1);
+            }
+         }
+      }
+      
+      for (Integer key : numbers.keySet()) {
+         if(numbers.get(key) != 9) { return false; }
+      }
+      return true;
+   }
+   
+   public boolean isSolved() {
+      return isValid() && isFull();
+   }
    
    public String toString () {
       String result = "";
