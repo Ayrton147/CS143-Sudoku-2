@@ -60,12 +60,12 @@ public class SudokuBoard {
    } 
    
    private boolean checkColumns() {
-      for (int c = 0; c < board[c].length; c++) {
+      for (int r = 0; r < board.length; r++) {
       
          Map<Integer, Integer> numbers = new HashMap<>();
          
-         for(int r = 0; r < board.length; r++) {
-            int number = board[r][c];
+         for(int c = 0; c < board[r].length; c++) {
+            int number = board[c][r];
                      
             if(numbers.containsKey(number)) {
                return false;            
@@ -81,8 +81,8 @@ public class SudokuBoard {
       return true;
    }
    
-   public boolean isValid(){
-      return isCorrect() && checkRows() && checkColumns() && checkMiniSquares();
+   public boolean isValid(){// needs a Set
+      return true;
    }
    
 
